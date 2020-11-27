@@ -39,7 +39,7 @@ and open the template in the editor.
     var globalToday = new Date();
     var globalCurrMonth=globalToday.getMonth(); 
     var globalCurrYear=globalToday.getFullYear();
-    
+  
     var presentDay = globalToday.getDate();
     var presentMonth=globalToday.getMonth();
     
@@ -49,27 +49,23 @@ and open the template in the editor.
     function createTable(){
         
         var tableTbody = document.querySelector('.table');
-
         var today = new Date();
         var currDay=today.getDate();
         var currMonth=globalCurrMonth;
         var currYear=globalCurrYear;
-
-    
+        
         tableTbody.innerHTML = '<caption class="caption">'+'<img src="prevm.gif" onClick="prevMonth()">'+ ' ' + arrMonth[currMonth] +' '+ currYear + ' ' +'<img src="nextm.gif" onClick="nextMonth()">' +'</caption>';   
-
         var tr=document.createElement("tr");
-
         for (var i=0;i<7;i++){
-
             var th=document.createElement("th" );
             var newContent = document.createTextNode(arrDays[i]);
             th.appendChild(newContent);
             tr.appendChild(th);
-
         }
         tableTbody.appendChild(tr);
+        
         ////////////////////////////
+        
         var day= new Date(currYear, currMonth, 1);
         while(day.getMonth() === currMonth){ // заполнение чиселками таблицы
         var t=day.getDay()-1; 
@@ -93,7 +89,7 @@ and open the template in the editor.
                             }
                        }
                             var newContent = document.createTextNode(day.getDate());
-                           // newContent.id = "content";
+                            // newContent.id = "content";
                             td.appendChild(newContent);
                             day.setDate(day.getDate()+1);
                    }
@@ -107,14 +103,13 @@ and open the template in the editor.
     
     function prevMonth(){
         if (globalCurrMonth === 0){
-                globalCurrMonth = 11;
-                globalCurrYear --;
+             globalCurrMonth = 11;
+             globalCurrYear --;
         }else{
-            globalCurrMonth --;
+             globalCurrMonth --;
         }
         createTable();
     }
-    
     function nextMonth(){
         if (globalCurrMonth === 11){
             globalCurrMonth = 0; 
@@ -123,9 +118,7 @@ and open the template in the editor.
             globalCurrMonth ++;
         }
         createTable();
-
     }
-
 </script>
 
 </head>
