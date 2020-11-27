@@ -1,0 +1,139 @@
+﻿
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Календарь</title>
+<style type="text/css">
+    body{
+        margin: auto;
+    }
+    .table{
+        margin: 100px auto 100px;
+        font-size: 100%;
+        font-weight: normal;
+        padding-bottom: 1%;
+        padding-left: 1%;
+        padding-right: 1%;
+        background: rgba(120,190,208,0.25);
+    }
+    caption{
+        background: rgba(246,233,250,0.5);
+        padding-bottom: 5px;
+        padding-top: 15px;
+    }
+    td {
+       text-align: left; 
+    }
+    #present{
+        color: #f00;
+        font-weight: bold;
+    }
+</style>
+<script lang="text/javascript">
+    var globalToday = new Date();
+    var globalCurrMonth=globalToday.getMonth(); 
+    var globalCurrYear=globalToday.getFullYear();
+    
+    var presentDay = globalToday.getDate();
+    var presentMonth=globalToday.getMonth();
+    
+    var arrMonth=["ЯНВАРЬ","ФЕВРАЛЬ","МАРТ","АПРЕЛЬ","МАЙ","ИЮНЬ","ИЮЛЬ","АВГУСТ","СЕНТЯБРЬ","ОКТЯБРЬ","НОЯБРЬ","ДЕКАБРЬ"];
+    var arrDays=["ПН","ВТ","СР","ЧТ","ПТ","СБ","ВС"];
+    
+    function createTable(){
+        
+        var tableTbody = document.querySelector('.table');
+
+        var today = new Date();
+        var currDay=today.getDate();
+        var currMonth=globalCurrMonth;
+        var currYear=globalCurrYear;
+
+    
+        tableTbody.innerHTML = '<caption class="caption">'+'<img src="prevm.gif" onClick="prevMonth()">'+ ' ' + arrMonth[currMonth] +' '+ currYear + ' ' +'<img src="nextm.gif" onClick="nextMonth()">' +'</caption>';   
+
+        var tr=document.createElement("tr");
+
+        for (var i=0;i<7;i++){
+
+            var th=document.createElement("th" );
+            var newContent = document.createTextNode(arrDays[i]);
+            th.appendChild(newContent);
+            tr.appendChild(th);
+
+        }
+        tableTbody.appendChild(tr);
+        ////////////////////////////
+        var day= new Date(currYear, currMonth, 1);
+        while(day.getMonth() === currMonth){ // заполнение чиселками таблицы
+        var t=day.getDay()-1; 
+            if (t===-1){
+                t=6;
+            }
+        var tr=document.createElement("tr");
+        var i=0;
+        var a=0;
+         while (i<7){
+                var td=document.createElement("td");
+                if (i<t){
+                    td.innerHTML=" ";
+                }else{
+                   if (day.getMonth() === currMonth){
+                       if (presentMonth === currMonth){
+                            if (presentDay === day.getDate()){
+                                td.id = "present";    //id, чтобы покрасить текущую дату
+                            }else{
+                                td.id = "";
+                            }
+                       }
+                            var newContent = document.createTextNode(day.getDate());
+                           // newContent.id = "content";
+                            td.appendChild(newContent);
+                            day.setDate(day.getDate()+1);
+                   }
+                }
+                tr.appendChild(td);
+                i++;  
+        }
+        tableTbody.appendChild(tr);
+        }
+    }
+    
+    function prevMonth(){
+        if (globalCurrMonth === 0){
+                globalCurrMonth = 11;
+                globalCurrYear --;
+        }else{
+            globalCurrMonth --;
+        }
+        createTable();
+    }
+    
+    function nextMonth(){
+        if (globalCurrMonth === 11){
+            globalCurrMonth = 0; 
+            globalCurrYear ++;
+        }else{
+            globalCurrMonth ++;
+        }
+        createTable();
+
+    }
+
+</script>
+
+</head>
+<body>
+<table class="table">
+<script>
+createTable();
+</script>
+</table>
+</body>
+</html>
